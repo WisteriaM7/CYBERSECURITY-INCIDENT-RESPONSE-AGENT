@@ -1,4 +1,4 @@
-learner_data/
+incidents/
 __pycache__/
 *.pyc
 .env
